@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart | KisanValley</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md p-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <a href="index.html">
+        <img src="images/kv.png" alt="KisanValley Logo" class="w-12 h-auto">
+      </a>
+      <h1 class="text-2xl font-bold">KisanValley</h1>
+    </div>
+    <div class="flex-1 mx-6">
+      <input type="search" placeholder="Search..." class="w-full p-2 border rounded" />
+    </div>
+    <nav class="space-x-4">
+      <a href="login.html" class="text-blue-600">Login</a>
+      <a href="cart.html" class="text-blue-600 font-semibold">Cart 🛒</a>
+    </nav>
+  </header>
+
+  <!-- Page Title -->
+  <section class="bg-white shadow p-6 text-center">
+    <h2 class="text-3xl font-bold">Your Shopping Cart</h2>
+    <p class="text-gray-600 mt-2">Review your selected items and proceed to checkout</p>
+  </section>
+
+  <!-- Cart Section -->
+  <section class="py-8 px-6">
+    <div id="cartContainer" class="bg-white rounded shadow p-4 space-y-4 max-w-4xl mx-auto">
+      <!-- Cart items will appear here -->
+    </div>
+
+    <!-- Cart Summary -->
+    <div id="cartSummary" class="max-w-4xl mx-auto bg-white rounded shadow p-6 mt-6 text-right hidden">
+      <h3 class="text-xl font-semibold mb-4">Total: <span id="totalAmount" class="text-green-700">₹0</span></h3>
+      <button class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Proceed to Checkout</button>
+    </div>
+
+    <!-- Empty Cart Message -->
+    <div id="emptyMessage" class="text-center text-gray-500 mt-12">
+      🛒 Your cart is currently empty.
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-green-600 text-white py-6 mt-10">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div>
+        <h4 class="font-bold mb-2">Links</h4>
+        <a href="#" class="block">Privacy Policy</a>
+        <a href="#" class="block">Terms</a>
+        <a href="#" class="block">Support</a>
+      </div>
+      <div>
+        <h4 class="font-bold mb-2">Follow Us</h4>
+        <p>Facebook | Instagram | YouTube</p>
+      </div>
+      <div>
+        <h4 class="font-bold mb-2">Newsletter</h4>
+        <form>
+          <input type="email" placeholder="Enter your email" class="w-full p-2 mb-2 rounded" />
+          <button class="w-full bg-white text-green-600 py-2 rounded font-bold">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <p class="text-center mt-6">&copy; 2025 KisanValley. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript: Demo Cart Logic -->
+  <script>
+    const demoCartItems = [
+      {
+        name: "Balwaan Power Weeder (BP-650)",
+        image: "images/products/bp-650.webp",
+        price: 39999,
+        quantity: 1
+      },
+      {
+        name: "Balwaan Brush Cutter (BX-35)",
+        image: "images/products/bx-35.jpg",
+        price: 11900,
+        quantity: 2
+      }
+    ];
+
+    const cartContainer = document.getElementById("cartContainer");
+    const cartSummary = document.getElementById("cartSummary");
+    const totalAmountEl = document.getElementById("totalAmount");
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    function renderCart() {
+      cartContainer.innerHTML = "";
+      let total = 0;
+
+      if (demoCartItems.length === 0) {
+        cartSummary.classList.add("hidden");
+        emptyMessage.classList.remove("hidden");
+        return;
+      }
+
+      demoCartItems.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const card = document.createElement("div");
+        card.className = "flex items-center gap-4 border-b pb-4";
+
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" class="w-24 h-24 object-cover rounded" />
+          <div class="flex-1">
+            <h4 class="font-bold text-lg">${item.name}</h4>
+            <p class="text-green-600 font-semibold">₹${item.price.toLocaleString()}</p>
+            <div class="mt-2 flex items-center space-x-2">
+              <label>Qty:</label>
+              <input type="number" min="1" value="${item.quantity}" class="w-16 p-1 border rounded text-center" onchange="updateQty(${index}, this.value)" />
+              <button onclick="removeItem(${index})" class="text-red-600 hover:underline text-sm">Remove</button>
+            </div>
+          </div>
+        `;
+
+        cartContainer.appendChild(card);
+      });
+
+      totalAmountEl.textContent = `₹${total.toLocaleString()}`;
+      cartSummary.classList.remove("hidden");
+      emptyMessage.classList.add("hidden");
+    }
+
+    function updateQty(index, qty) {
+      demoCartItems[index].quantity = parseInt(qty) || 1;
+      renderCart();
+    }
+
+    function removeItem(index) {
+      demoCartItems.splice(index, 1);
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+
+</body>
+</html>

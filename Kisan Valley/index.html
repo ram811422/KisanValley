@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KisanValley</title>
+  <!-- ✅ Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md p-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <img src="images/kv.png" alt="KisanValley Logo" class="w-12 h-auto">
+      <h1 class="text-2xl font-bold">KisanValley</h1>
+    </div>
+    <div class="flex-1 mx-6">
+      <!-- ✅ Modern Search Bar -->
+<div class="relative max-w-xl w-full mx-auto">
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Search agricultural products..." 
+    class="w-full border border-gray-300 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm"
+    oninput="filterProducts()" 
+  />
+  <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+  <ul id="suggestions" class="absolute z-10 bg-white w-full mt-1 rounded shadow hidden max-h-64 overflow-y-auto"></ul>
+</div>
+
+    </div>
+    <nav class="space-x-4">
+      <a href="login.html" class="text-blue-600">Login</a>
+      <a href="cart.html" class="text-blue-600">Cart 🛒</a>
+    </nav>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="bg-green-600 text-white p-3 flex justify-center space-x-6">
+    <a href="#home" class="hover:underline">Home</a>
+    <a href="#about" class="hover:underline">About Us</a>
+    <a href="#services" class="hover:underline">Services</a>
+    <a href="#products" class="hover:underline">Products</a>
+    <a href="#contact" class="hover:underline">Contact</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="text-center py-12 bg-green-100" id="home">
+    <h2 class="text-4xl font-bold mb-2">Welcome to KisanValley</h2>
+    <p class="text-lg mb-4">Your one-stop solution for all agricultural needs.</p>
+    <button class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Explore Products</button>
+  </section>
+
+  <!-- Categories -->
+  <section class="py-10 text-center">
+    <h3 class="text-2xl font-semibold mb-6">Popular Categories</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-6">
+      <a href="weeder-tiller.html"><div class="bg-white shadow p-4 rounded">Weeder and Tiller</div></a>
+      <a href="brush-cutters.html"><div class="bg-white shadow p-4 rounded">Brush Cutters</div></a>
+      <div class="bg-white shadow p-4 rounded">Sprayers</div>
+      <div class="bg-white shadow p-4 rounded">Earth Augers</div>
+      <div class="bg-white shadow p-4 rounded">Water Pumps</div>
+      <div class="bg-white shadow p-4 rounded">Chainsaws</div>
+    </div>
+  </section>
+
+  <!-- Products (Dynamic) -->
+  <section id="products" class="py-10 bg-white">
+    <div class="text-center mb-6">
+      <h3 class="text-2xl font-semibold">Top Selling Products</h3>
+    </div>
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6"></div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-10 bg-green-50" id="about">
+    <h3 class="text-center text-2xl font-semibold mb-6">What Farmers Say</h3>
+    <div class="flex flex-col md:flex-row justify-center gap-6 px-6">
+      <div class="bg-white shadow p-4 rounded">⭐⭐⭐⭐⭐ "Excellent quality machines!"</div>
+      <div class="bg-white shadow p-4 rounded">⭐⭐⭐⭐⭐ "Quick delivery and great support!"</div>
+    </div>
+  </section>
+
+  <!-- Payment Logos -->
+  <section class="py-6 bg-white text-center">
+    <h3 class="text-lg font-semibold">We Accept</h3>
+    <p class="text-gray-600 mt-2">Visa | Mastercard | UPI | COD</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-green-600 text-white py-6" id="contact">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div>
+        <h4 class="font-bold mb-2">Links</h4>
+        <a href="#" class="block">Privacy Policy</a>
+        <a href="#" class="block">Terms</a>
+        <a href="#" class="block">Support</a>
+      </div>
+      <div>
+        <h4 class="font-bold mb-2">Follow Us</h4>
+        <p>Facebook | Instagram | YouTube</p>
+      </div>
+      <div>
+        <h4 class="font-bold mb-2">Newsletter</h4>
+        <form>
+          <input type="email" placeholder="Enter your email" class="w-full p-2 mb-2 rounded" />
+          <button class="w-full bg-white text-green-600 py-2 rounded font-bold">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <p class="text-center mt-6">&copy; 2025 KisanValley. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ Product Data (JavaScript) -->
+ <script>
+  // 🔍 All product names (you can fetch this from your product array too)
+  const allProducts = [
+    "Balwaan Power Weeder (BP-650)",
+    "Balwaan Side Pack Brush Cutter (BX-35)",
+    "Balwaan Earth Auger (BE-63)",
+    "Balwaan Water Pump (WP-33R)",
+    "Mini Tiller Machine",
+    "Heavy Duty Chainsaw"
+  ];
+
+  const input = document.getElementById("searchInput");
+  const suggestionsBox = document.getElementById("suggestions");
+
+  function filterProducts() {
+    const query = input.value.trim().toLowerCase();
+    suggestionsBox.innerHTML = "";
+
+    if (!query) {
+      suggestionsBox.classList.add("hidden");
+      return;
+    }
+
+    const matches = allProducts.filter(product => product.toLowerCase().includes(query));
+
+    if (matches.length === 0) {
+      suggestionsBox.classList.remove("hidden");
+      suggestionsBox.innerHTML = `<li class="px-4 py-2 text-gray-500">No results found</li>`;
+      return;
+    }
+
+    matches.forEach(product => {
+      const item = document.createElement("li");
+      item.textContent = product;
+      item.className = "px-4 py-2 hover:bg-green-100 cursor-pointer";
+      item.onclick = () => {
+        input.value = product;
+        suggestionsBox.classList.add("hidden");
+        alert(`You selected: ${product}`);
+        // Optional: Redirect to product page
+        // window.location.href = `product-detail.html?name=${encodeURIComponent(product)}`;
+      };
+      suggestionsBox.appendChild(item);
+    });
+
+    suggestionsBox.classList.remove("hidden");
+  }
+
+  // Close dropdown if clicked outside
+  document.addEventListener("click", function (e) {
+    if (!input.contains(e.target) && !suggestionsBox.contains(e.target)) {
+      suggestionsBox.classList.add("hidden");
+    }
+  });
+</script>
+    <script>
+        // Sample product data
+        const products = [
+        {
+            name: "Balwaan Power Weeder (BP-650)",
+            image: "images/products/bp-650.webp",
+            price: "₹39,999"
+        },
+        {
+            name: "Balwaan Side Pack Brush Cutter (BX-35)",
+            image: "images/products/bx-35.jpg",
+            price: "₹11,900"
+        },
+        {
+            name: "Balwaan Earth Auger (BE-63)",
+            image: "images/products/be-63.jpg",
+            price: "₹15,000"
+        },
+        {
+            name: "Balwaan Water Pump (WP-33R)",
+            image: "images/products/wp-33r.webp",
+            price: "₹8,500"
+        }
+        ];
+    
+        const productGrid = document.getElementById("productGrid");
+        products.forEach(product => {
+        const card = document.createElement("div");
+        card.className = "bg-white shadow-md rounded overflow-hidden";
+        card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+            <div class="p-4">
+            <h4 class="text-lg font-bold">${product.name}</h4>
+            <p class="text-green-700 font-semibold mb-2">${product.price}</p>
+            <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add to Cart</button>
+            </div>
+        `;
+        productGrid.appendChild(card);
+        });
+    </script>
+    <script>
+  const products = JSON.parse(localStorage.getItem("products")) || [];
+
+  const productGrid = document.getElementById("productGrid");
+  products.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "bg-white shadow-md rounded overflow-hidden";
+    card.innerHTML = `
+      <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h4 class="text-lg font-bold">${product.name}</h4>
+        <p class="text-green-700 font-semibold mb-2">₹${product.price}</p>
+        <button onclick='addToCart(${JSON.stringify(product)})' class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add to Cart</button>
+      </div>
+    `;
+    productGrid.appendChild(card);
+  });
+</script>
+
+
+</body>
+</html>

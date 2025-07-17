@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brush Cutters | KisanValley</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md p-4 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <a href="index.html">
+        <img src="images/kv.png" alt="KisanValley Logo" class="w-12 h-auto">
+      </a>
+      <h1 class="text-2xl font-bold">KisanValley</h1>
+    </div>
+    <div class="flex-1 mx-6">
+      <input type="search" placeholder="Search..." class="w-full p-2 border rounded" />
+    </div>
+    <nav class="space-x-4">
+      <a href="#" class="text-blue-600">Login</a>
+      <a href="#" class="text-blue-600">Cart 🛒</a>
+    </nav>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav class="bg-green-100 px-6 py-3 text-sm text-green-700">
+    <a href="index.html" class="hover:underline">Home</a> >
+    <span>Brush Cutters</span>
+  </nav>
+
+  <!-- Title Section -->
+  <section class="text-center py-8 bg-white shadow">
+    <h2 class="text-3xl font-bold">Brush Cutters</h2>
+    <p class="text-gray-600 mt-2">Durable and high-performance cutters for all farm and garden needs</p>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="py-10 bg-gray-50">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6" id="brushCutterGrid">
+      <!-- JS will inject cards -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-green-600 text-white py-6 mt-10">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div>
+        <h4 class="font-bold mb-2">Links</h4>
+        <a href="#" class="block">Privacy Policy</a>
+        <a href="#" class="block">Terms</a>
+        <a href="#" class="block">Support</a>
+      </div>
+      <div>
+        <h4 class="font-bold mb-2">Follow Us</h4>
+        <p>Facebook | Instagram | YouTube</p>
+      </div>
+      <div>
+        <h4 class="font-bold mb-2">Newsletter</h4>
+        <form>
+          <input type="email" placeholder="Enter your email" class="w-full p-2 mb-2 rounded" />
+          <button class="w-full bg-white text-green-600 py-2 rounded font-bold">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <p class="text-center mt-6">&copy; 2025 KisanValley. All rights reserved.</p>
+  </footer>
+
+  <!-- JS: Brush Cutter Products -->
+  <script>
+    const brushCutterProducts = [
+      {
+        name: "Balwaan Side Pack Brush Cutter (BX-35)",
+        image: "images/products/bx-35.jpg",
+        price: "₹11,900"
+      },
+      {
+        name: "Balwaan Side Pack 50cc 4-Stroke Brush Cutter (BX-50)",
+        image: "images/products/bx-50.jpg",
+        price: "₹14,900"
+      },
+      {
+        name: "Balwaan Side Pack 52cc 2 stroke Brush Cutter (BX-52) ",
+        image: "images/products/bx-52.webp",
+        price: "₹8,900"
+      }
+      // Add more as needed
+    ];
+
+    const grid = document.getElementById("brushCutterGrid");
+    brushCutterProducts.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "bg-white shadow-md rounded overflow-hidden";
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <h4 class="text-lg font-bold">${product.name}</h4>
+          <p class="text-green-700 font-semibold mb-2">${product.price}</p>
+          <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add to Cart</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
